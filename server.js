@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/contact", contactRouter);
+app.use("/.netlify/functions/api/contact", contactRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server ENV ${process.env.NODE_ENV}`);
