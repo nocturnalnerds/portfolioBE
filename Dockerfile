@@ -1,28 +1,15 @@
-# syntax=docker/dockerfile:1
+FROM node:22-alpine
 
-ARG NODE_VERSION=22.20.0
+WORKDIR /app
 
-FROM node:${NODE_VERSION}-alpine
-
-# Use production environment
-ENV NODE_ENV=production
-
-WORKDIR /usr/src/app
-
-# Copy package files first for better layer caching
 COPY package*.json ./
 
-# Install dependencies
 RUN npm ci --omit=dev
 
-# Copy application source
 COPY . .
 
-# Expose application port
 EXPOSE 3001
 
-# Run as non-root user
-USER node
+ENV NODE_ENV=production
 
-# Start application
-CMD ["npm", "run", "prod"]
+CMD ["node", "server.js"]
